@@ -1,0 +1,46 @@
+{
+    "name": "app.exec",
+    "version": "1.0.1",
+    "description": "Модуль для запуска консольных команд.",
+    "contributors": [
+        {
+            "name": "Sergei",
+            "email": "classtype@mail.ru"
+        }
+    ],
+    "main": "src/app.exec.js",
+    "homepage": "http://github.com/classtype/app.exec",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/classtype/app.exec.git"
+    },
+    "bugs": {
+        "url": "http://github.com/classtype/app.exec/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://github.com/classtype/app.exec/blob/master/LICENSE"
+        }
+    ],
+    "keywords": [
+        "exec",
+        "execute",
+        "spawn",
+        "terminal",
+        "console",
+        "shell",
+        "command",
+        "child",
+        "process",
+        "child_process",
+        "fork",
+        "npm",
+        "path",
+        "local"
+    ],
+    "dependencies": {
+        "async": "3.2.0",
+        "colors": "1.0.3"
+    }
+}
