@@ -22,7 +22,7 @@ const Exec = function(commands = [], onConsole) {
     
 // Вызов через new
     Promise.resolve().then(() => {
-        this._onConsole = (onConsole == true ? true : false);
+        this._onConsole = onConsole;
         this._logs = [];
         
         let array = [];
