@@ -1,6 +1,6 @@
 {
     "name": "app.exec",
-    "version": "1.0.1a",
+    "version": "1.0.2",
     "description": "Модуль для запуска консольных команд.",
     "contributors": [
         {
