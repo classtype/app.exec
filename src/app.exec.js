@@ -10,11 +10,11 @@ const async = require('async');
 |
 |-------------------------------------------------------------------------------------------------*/
 
-const Exec = function(commands = [], onConsole) {
+const Exec = function(commands = [], isLogToConsole = false) {
 // Вызов через await
     if (!(this instanceof Exec)) {
         return new Promise((resolve) => {
-            new Exec(commands, onConsole).onEnd((result) => {
+            new Exec(commands, isLogToConsole).onEnd((result) => {
                 resolve(result);
             });
         });
@@ -22,20 +22,20 @@ const Exec = function(commands = [], onConsole) {
     
 // Вызов через new
     Promise.resolve().then(() => {
-        this._onConsole = onConsole;
+        this.isLogToConsole = isLogToConsole;
         this._logs = [];
         
-        let array = [];
+        let commandCallback = [];
         
         for (let i = 0; i < commands.length; i++) {
-            array[i] = ((command) => {
+            commandCallback[i] = ((command) => {
                 return (callback) => {
                     this.exec(command, callback);
                 };
             })(commands[i]);
         }
         
-        async.waterfall(array, (code) => {
+        async.waterfall(commandCallback, (code) => {
             if (typeof this._onEnd == 'function') {
                 this._onEnd(this.logs, code);
             }
@@ -82,14 +82,14 @@ Exec.prototype.exec = function(args, callback) {
     }
     
 // Команда
-    this.add(colors.bgCyan('Старт: "'+line+'"'), true);
+    this.add(colors.bgCyan('Старт: "'+line+'"')+'\n');
     
 // Init
     let ch = spawn(args.shift(), args);
     
 // Error
     ch.on('error', (error) => {
-        this.add(colors.bgRed('Ошибка: "'+error+'"'), true);
+        this.add(colors.bgRed('Ошибка: "'+error+'"')+'\n');
     });
     
 // StdErr
@@ -114,21 +114,10 @@ Exec.prototype.exec = function(args, callback) {
 |
 |-------------------------------------------------------------------------------------------------*/
 
-Exec.prototype.add = function(result, consoleLog) {
+Exec.prototype.add = function(result) {
 // Вывод в консоль
-    if (this._onConsole) {
-        if (consoleLog) {
-            console.log(result);
-        }
-        
-        else {
-            process.stdout.write(result);
-        }
-    }
-    
-// 123
-    if (consoleLog) {
-        result += '\n';
+    if (this.isLogToConsole) {
+        process.stdout.write(result);
     }
     
 // Общий лог
