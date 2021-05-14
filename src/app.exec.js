@@ -10,7 +10,7 @@ const async = require('async');
 |
 |-------------------------------------------------------------------------------------------------*/
 
-const Exec = function(commands = [], isLogToConsole = false) {
+const Exec = function(commands = [], isLogToConsole = false, commandLimit = 20) {
 // Вызов через await
     if (!(this instanceof Exec)) {
         return new Promise((resolve) => {
@@ -23,6 +23,7 @@ const Exec = function(commands = [], isLogToConsole = false) {
 // Вызов через new
     Promise.resolve().then(() => {
         this.isLogToConsole = isLogToConsole;
+        this.commandLimit = commandLimit;
         this._logs = [];
         
         let commandCallback = [];
@@ -120,8 +121,13 @@ Exec.prototype.add = function(result) {
         process.stdout.write(result);
     }
     
-// Общий лог
+// Добавляем результат в общий лог
     this._logs.push(result);
+    
+// Удаляем старые логи
+    if (this.commandLimit != 0 && this._logs.length > this.commandLimit) {
+        this._logs.splice(0, 1);
+    }
     
 // События
     if (typeof this._onCommand == 'function') {
