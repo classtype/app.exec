@@ -121,7 +121,7 @@ new Exec([
     ['command2', '--arg1', '--arg2']
 ])
 .onCommand((commandResult) => {
-    console.log(commandResult);
+    process.stdout.write(commandResult);
 });
 ```
 

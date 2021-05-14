@@ -82,24 +82,24 @@ Exec.prototype.exec = function(args, callback) {
     }
     
 // Команда
-    this.add('good', colors.bgCyan('Старт: "'+line+'"'));
+    this.add(colors.bgCyan('Старт: "'+line+'"'), true);
     
 // Init
     let ch = spawn(args.shift(), args);
     
 // Error
     ch.on('error', (error) => {
-        this.add('error', colors.bgRed('Ошибка: "'+error+'"'));
+        this.add(colors.bgRed('Ошибка: "'+error+'"'), true);
     });
     
 // StdErr
     ch.stderr.on('data', (data) => {
-        this.add('stderr', colors['red'](data.toString()));
+        this.add(colors['red'](data.toString()));
     });
     
 // StdOut
     ch.stdout.on('data', (data) => {
-        this.add('stdout', colors['green'](data.toString()));
+        this.add(colors['green'](data.toString()));
     });
     
 // Close
@@ -114,14 +114,25 @@ Exec.prototype.exec = function(args, callback) {
 |
 |-------------------------------------------------------------------------------------------------*/
 
-Exec.prototype.add = function(status, result) {
+Exec.prototype.add = function(result, consoleLog) {
 // Вывод в консоль
     if (this._onConsole) {
-        process.stdout.write(result+'\n');
+        if (consoleLog) {
+            console.log(result);
+        }
+        
+        else {
+            process.stdout.write(result);
+        }
+    }
+    
+// 123
+    if (consoleLog) {
+        result += '\n';
     }
     
 // Общий лог
-    this._logs.push(result+'\n');
+    this._logs.push(result);
     
 // События
     if (typeof this._onCommand == 'function') {

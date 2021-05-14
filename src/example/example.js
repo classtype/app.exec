@@ -82,7 +82,7 @@ new Exec([
     ['ls', '-la']
 ])
 .onCommand((commandResult) => {
-    console.log(commandResult);
+    process.stdout.write(commandResult);
     //=> Старт: "ls"
     //=> exec.js
     //=> README.md
