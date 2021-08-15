@@ -83,24 +83,24 @@ Exec.prototype.exec = function(args, callback) {
     }
     
 // Команда
-    this.add(colors.bgCyan('Старт: "'+line+'"')+'\n');
+    this.add('bgCyan', 'Старт: "'+line+'"\n');
     
 // Init
     let ch = spawn(args.shift(), args);
     
 // Error
     ch.on('error', (error) => {
-        this.add(colors.bgRed('Ошибка: "'+error+'"')+'\n');
+        this.add('bgRed', 'Ошибка: "'+error+'"\n');
     });
     
 // StdErr
     ch.stderr.on('data', (data) => {
-        this.add(colors['red'](data.toString()));
+        this.add('red', data.toString());
     });
     
 // StdOut
     ch.stdout.on('data', (data) => {
-        this.add(colors['green'](data.toString()));
+        this.add('green', data.toString())
     });
     
 // Close
@@ -115,10 +115,10 @@ Exec.prototype.exec = function(args, callback) {
 |
 |-------------------------------------------------------------------------------------------------*/
 
-Exec.prototype.add = function(result) {
+Exec.prototype.add = function(color, result) {
 // Вывод в консоль
     if (this.isLogToConsole) {
-        process.stdout.write(result);
+        process.stdout.write(colors[color](result));
     }
     
 // Добавляем результат в общий лог

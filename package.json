@@ -1,6 +1,6 @@
 {
     "name": "app.exec",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Модуль для запуска консольных команд.",
     "contributors": [
         {
@@ -41,6 +41,6 @@
     ],
     "dependencies": {
         "async": "3.2.0",
-        "colors": "1.0.3"
+        "colors": "1.4.0"
     }
 }
